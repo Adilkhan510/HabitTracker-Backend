@@ -1,0 +1,25 @@
+{
+  "name": "final_project_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "bcrypt": "^3.0.7",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "author": "Adil Khan",
+  "license": "MIT"
+}
