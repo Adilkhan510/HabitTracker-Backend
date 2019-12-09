@@ -28,11 +28,14 @@ const create = async (req,res)=>{
     }
 }
 
+// From DevED JWT tutorial 
 const login = async (req,res)=>{
     const { error } = loginValidation(req.body);
-    if(error) res.status(500).send(error.details[0].message);
+    if(error) return res.status(500).send(error.details[0].message);
 // Check to see if user exists:
     const user = await db.User.findOne({email : req.body.email});
+    console.log(user)
+    console.log(req.body)
     if(!user) return res.status(400).send('Email or password invalid')
 
     const validPass = await bcrypt.compare(req.body.password, user.password);
@@ -48,7 +51,7 @@ const login = async (req,res)=>{
         id: user._id,
         token
     })
-    return
+
 }
 
 

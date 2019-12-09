@@ -13,7 +13,12 @@ const UserSchema = new Schema({
     password : {
         type: String,
         required: [true, 'Password is Required']
+    },
+    habits: [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Habit"
     }
+    ]
 })
 
 const User = model('User', UserSchema );

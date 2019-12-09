@@ -25,7 +25,7 @@ const updateUser = (req,res)=>{
 }
 
 const getUserInfo = (req, res)=>{
-    db.User.findOne({name : req.params.slug}, (error, foundUser)=>{
+    db.User.findById(req.params.id).populate('habits').exec((error, foundUser)=>{
         if(error) res.status(500).json({
             error : "Something Went Wrong",
         })
@@ -37,7 +37,7 @@ const getUserInfo = (req, res)=>{
 }
 
 const index = (req,res)=>{
-    db.User.find({},(error,foundUsers)=>{
+    db.User.find({}).populate('habits').exec((error,foundUsers)=>{
         if (error) res.status(500).json({
             Error: "No users in the database"
         })

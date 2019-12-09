@@ -4,8 +4,8 @@ const ctrl = require('../controllers')
 
 // USER ROUTES
 
-router.post('/user/create', ctrl.auth.create);
-router.get('/user/:id', ctrl.user.getUserInfo)
+router.post('/users/create', ctrl.auth.create);
+router.get('/users/:id', ctrl.user.getUserInfo)
 router.get('/users', ctrl.user.index)
 router.put('/user/:slug', ctrl.user.updateUser)
 router.post('/login', ctrl.auth.login)

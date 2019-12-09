@@ -12,5 +12,5 @@ mongoose.connect(DB_URI,{
 
 module.exports = {
     User : require('./User'),
-    Habit : require('./User')
+    Habit : require('./Habit')
 }

@@ -1,19 +1,39 @@
-const db = require('../models/Habit')
+const db = require('../models')
 
 const create = (req,res)=>{
-    db.create(req.body,(error,createdHabit)=>{
-        if(error) res.status(500).json({
+    // console.log(req.headers)
+    console.log(req.body)
+    db.Habit.create(req.body,(error,createdHabit)=>{
+        if(error) return res.status(500).json({
             error: "Something went wrong please try again"
         })
-        res.status(201).json({
-            status:201,
-            data: createdHabit
+        console.log('Finding user...')
+        db.User.findById(req.body.id,(error,foundUser)=>{
+            if(error) return res.status(500).json({
+                status:500,
+                error: "something went wrong"
+            })
+            console.log(foundUser)
+            if(foundUser){
+                foundUser.habits.push(createdHabit);
+                foundUser.save((error,savedUser)=>{
+                    if(error) return console.log(error);
+                    res.status(201).json({
+                        status: 201,
+                        data: createdHabit,
+                    })
+                })
+            }
         })
+        // res.status(201).json({
+        //     status:201,
+        //     data: createdHabit
+        // })
     })
 }
 
 const showAll = (req,res)=>{
-    db.find({},(error,foundAll)=>{
+    db.Habit.find({},(error,foundAll)=>{
         if(error) res.status(500).json({
             status: 500,
             error: "Something went wrong"
@@ -26,7 +46,7 @@ const showAll = (req,res)=>{
 }
 
 const edit = (req,res)=>{
-    db.findByIdAndUpdate(req.params.id,req.body,{new: true},(err,foundHabit)=>{
+    db.Habit.findByIdAndUpdate(req.params.id,req.body,{new: true},(err,foundHabit)=>{
         if(err) res.status(500).json({
             status: 500,
             error: "Sorry, there is no post with that id"
@@ -39,7 +59,7 @@ const edit = (req,res)=>{
 }
 
 const destroy = (req,res)=>{
-    db.findByIdAndDelete(req.params.id,(error,data)=>{
+    db.Habit.findByIdAndDelete(req.params.id,(error,data)=>{
         if(error) res.status(500).json({
             status :500,
             error : "Sorry, Please try again"
