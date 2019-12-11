@@ -7,11 +7,7 @@ const HabitSchema = new Schema({
         type : String,
         required : true,
     },
-    daysCompleted : [{
-        type : Date
-        }
-
-    ]
+    daysCompleted : Array
 
 })
 

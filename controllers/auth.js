@@ -19,12 +19,11 @@ const create = async (req,res)=>{
         email : req.body.email,
         password: hashedPassword
     })
-
     try {
         const savedUser = await user.save();
         res.send(savedUser);
     } catch (error) {
-        res.status(400).send(err)
+        return res.status(400).send(error)
     }
 }
 
@@ -51,7 +50,6 @@ const login = async (req,res)=>{
         id: user._id,
         token
     })
-
 }
 
 

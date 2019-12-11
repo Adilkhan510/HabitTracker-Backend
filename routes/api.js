@@ -13,6 +13,7 @@ router.post('/login', ctrl.auth.login)
 // HABITS ROUTES
 
 router.post('/habits/create', ctrl.habit.create)
+router.put('/habits/edit/:id', ctrl.habit.addDate)
 router.get('/habits', ctrl.habit.showAll)
 router.put('/habits/:id/edit', ctrl.habit.edit)
 router.delete('/habits/:id',ctrl.habit.destroy)

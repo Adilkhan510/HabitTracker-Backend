@@ -1,7 +1,7 @@
 const db = require('../models')
 
 const create = (req,res)=>{
-    // console.log(req.headers)
+    console.log(req.headers)
     console.log(req.body)
     db.Habit.create(req.body,(error,createdHabit)=>{
         if(error) return res.status(500).json({
@@ -70,9 +70,26 @@ const destroy = (req,res)=>{
         })
     })
 }
+const addDate = (req,res)=>{
+    console.log("addding datee....")
+    db.Habit.findById(req.params.id,(error,foundHabit)=>{
+        console.log(req.body)
+        if(error) return res.status(401).json({
+            error: "something went wrong, check your route",
+        })
+        console.log("adding habit.....")
+        foundHabit.daysCompleted.push(req.body.date);
+        console.log(req.body)
+        foundHabit.save()
+        return res.status(200).json({
+            data: foundHabit
+        })
+    })
+}
 module.exports = {
     create,
     showAll,
     edit,
-    destroy
+    destroy,
+    addDate
 }

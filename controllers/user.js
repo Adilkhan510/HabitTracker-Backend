@@ -14,7 +14,7 @@ const create = (req,res)=>{
 
 const updateUser = (req,res)=>{
     db.User.findByIdAndUpdate(req.params.id, req.body,{new:true},(error,updatedUser)=>{
-        if (error) res.status(500).json({
+        if (error) return res.status(500).json({
             error: "user doesn't exist",
         })
         res.status(201).json({
@@ -26,7 +26,7 @@ const updateUser = (req,res)=>{
 
 const getUserInfo = (req, res)=>{
     db.User.findById(req.params.id).populate('habits').exec((error, foundUser)=>{
-        if(error) res.status(500).json({
+        if(error) return res.status(500).json({
             error : "Something Went Wrong",
         })
         res.status(201).json({
@@ -38,7 +38,7 @@ const getUserInfo = (req, res)=>{
 
 const index = (req,res)=>{
     db.User.find({}).populate('habits').exec((error,foundUsers)=>{
-        if (error) res.status(500).json({
+        if (error) return res.status(500).json({
             Error: "No users in the database"
         })
         res.status(201).json({
