@@ -6,14 +6,16 @@ const { registerValidation, loginValidation } = require('./validation')
 
 
 const create = async (req,res)=>{
+    console.log("Creating user...")
     const { error } = registerValidation(req.body);
-    if(error) res.status(500).send(error.details[0].message);
+    if(error) return res.status(500).send(error.details[0].message);
 // Check to see if user exists:
     const userExists = await db.User.findOne({email : req.body.email});
     if(userExists) return res.status(400).send('Email already exists')
-
+    console.log("user doesn't exits....")
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
+    console.log('created...password')
     const user = new db.User({
         name: req.body.name,
         email : req.body.email,
