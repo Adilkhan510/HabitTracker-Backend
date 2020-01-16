@@ -78,12 +78,26 @@ const addDate = (req,res)=>{
             error: "something went wrong, check your route",
         })
         console.log("adding habit.....")
-        foundHabit.daysCompleted.push(req.body.date);
-        console.log(req.body)
-        foundHabit.save()
-        return res.status(200).json({
-            data: foundHabit
-        })
+        // Finding to see if we already completed that habit/task for the day. 
+
+        let index = foundHabit.daysCompleted.indexOf(req.body.date);
+        if(index !== -1){
+            // if we did it will be the last element so we will remove it.
+            foundHabit.daysCompleted.pop();
+            console.log("deleting the date")
+            foundHabit.save()
+            return res.status(200).json({
+                data: foundHabit
+            })
+        }
+        else{
+            // else add day to the list. 
+            foundHabit.daysCompleted.push(req.body.date);
+            foundHabit.save()
+            return res.status(200).json({
+                data: foundHabit
+            })
+        }
     })
 }
 module.exports = {
